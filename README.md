@@ -1,6 +1,6 @@
 [![PyPI version](https://badge.fury.io/py/keygen.svg)](https://badge.fury.io/py/keygen)
 
-keygen v0.0.1
+keygen v0.0.2
 ======================================
 
 Простой кейген для генерации всевозможных ключей, токенов и т.п.
@@ -8,24 +8,24 @@ keygen v0.0.1
 Установка
 --------------------------------------
 ```bash
-pip install keygen
+> pip install keygen
 ```
 
 Параметры коммандной строки
 --------------------------------------
-```
+```bash
 > keygen [-s SYMBOLS] [-l LENGTH] [-v]
     -s, --symbols     # Набор символов для генерации:
-                          u - ASCII uppercase letters
-                          l - ASCII lowercase letters
-                          d - digits
-                          p - punctuation symbols
-                          h - HEX digits
-                          o - OCT digits
-                          b - BIN digits
-                          По умолчанию: uldp
+                         u - ASCII uppercase letters
+                         l - ASCII lowercase letters
+                         d - digits
+                         p - punctuation symbols
+                         h - HEX digits
+                         o - OCT digits
+                         b - BIN digits
+                         По умолчанию: uldp
     -l, --length      # Длинна генерируемого ключа
-                          По умолчанию: 32
+                         По умолчанию: 32
     -v, --verbose     # Вывод дополнительной информации
 ```
 
@@ -47,6 +47,10 @@ pip install keygen
 
 Список изменений
 --------------------------------------
+* **v0.0.2** \[_22.03.2018_\]
+
+    - Добавлена проверка входных параметров.
+    
 * **v0.0.1** \[_20.03.2018_\]
 
     - Начало работы над проектом.
