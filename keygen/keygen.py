@@ -1,47 +1,32 @@
-import random
-import string
+import secrets
 import sys
 from argparse import ArgumentParser, RawTextHelpFormatter
+
+from keygen.transforms import Algorythm
+from keygen.utils import build_charset
+
+
+def generate(symbols: str = 'uldp', length: int = 32, emulate: Algorythm = None):
+    charset = build_charset(symbols)
+    result = ''.join([secrets.choice(charset) for _ in range(length)])
+    if emulate:
+        result = emulate.apply(result)
+    return result
 
 
 def main():
     parser = ArgumentParser(formatter_class=RawTextHelpFormatter)
     parser.add_argument('-s', '--symbols', dest='symbols', default='uldp', type=str, help='Symbols can set of next vals:\n  u - ASCII uppercase letters\n  l - ASCII lowеrcase letters\n  d - digits\n  p - punctuation\n  h - HEX digits\n  o - OCT digits\n  b - BIN digits\nDefault: uldp')
     parser.add_argument('-l', '--length', dest='length', default=32, type=int, help='Length of generated key\nDefault: 32')
-    parser.add_argument('-v', '--verbose', dest='verbose', action='store_true', help='Output more info\nDefault: false')
+    parser.add_argument('-e', '--emulate', dest='emulate', type=Algorythm, choices=list(Algorythm), help='Emulate result of encryption algorithm\nSupports algorithms: %s\nDefault: None' % ', '.join([str(v) for v in Algorythm]))
     args = parser.parse_args()
 
-    invalid = ''.join(filter(lambda s: s not in 'uldphob', args.symbols))
-    if invalid:
-        sys.stderr.write(f'Invalid symbol set identifier: "{invalid}".\n')
+    invalid_symbols = ''.join(filter(lambda s: s not in 'uldphob', args.symbols))
+    if invalid_symbols:
+        sys.stderr.write('Invalid symbol set identifier: "%s".\n' % invalid_symbols)
         exit()
 
-    chars = ''
-    if 'u' in args.symbols:
-        chars += string.ascii_uppercase
-    if 'l' in args.symbols:
-        chars += string.ascii_lowercase
-    if 'd' in args.symbols:
-        chars += string.digits
-    if 'p' in args.symbols:
-        chars += string.punctuation
-    if 'h' in args.symbols:
-        chars += string.hexdigits
-    if 'o' in args.symbols:
-        chars += string.octdigits
-    if 'b' in args.symbols:
-        chars += '01'
-
-    charset = list(set(chars))
-
-    result = ''.join([random.choice(charset) for _ in range(args.length)])
-
-    if args.verbose:
-        sys.stdout.write(f'Symbols: {chars}\n')
-        sys.stdout.write(f'Length:  {args.length}\n')
-        sys.stdout.write(f'Result:  {result}\n')
-    else:
-        sys.stdout.write(f'{result}\n')
+    sys.stdout.write('%s\n' % generate(args.symbols, args.length, args.emulate))
 
 
 if __name__ == '__main__':
