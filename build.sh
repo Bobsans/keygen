@@ -2,9 +2,7 @@
 
 # rm -rf ./dist/
 
-python setup.py sdist
-python setup.py bdist_wheel
-python setup.py clean
+python -m build
 
 rm -rf ./build/
 rm -rf ./*.egg-info

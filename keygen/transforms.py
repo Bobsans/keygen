@@ -15,8 +15,8 @@ class Algorythm(Enum):
     def __str__(self) -> str:
         return self.value
 
-    def apply(self, value: str) -> str:
+    def apply(self, value: str) -> str | None:
         if self in (self.MD5, self.SHA1, self.SHA224, self.SHA256, self.SHA384, self.SHA512):
-            return getattr(hashlib, self.value)(value.encode()).hexdigest()
+            return getattr(hashlib, str(self.value))(value.encode()).hexdigest()
         if self is self.UUID:
             return str(uuid.uuid3(uuid.NAMESPACE_OID, value))

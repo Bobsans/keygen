@@ -1,21 +1,21 @@
 [![PyPI version](https://badge.fury.io/py/keygen.svg)](https://badge.fury.io/py/keygen)
 
-keygen v0.0.3
+keygen v0.1.0
 ======================================
 
-Простой кейген для генерации всевозможных ключей, токенов и т.п.
+A tiny, dependency-free CLI for generating strong keys, tokens, and password-like strings with flexible symbol sets.
 
-Установка
+Installation
 --------------------------------------
 ```bash
 > pip install keygen
 ```
 
-Параметры коммандной строки
+Command line parameters
 --------------------------------------
 ```bash
 > keygen [-s SYMBOLS] [-l LENGTH] [-v]
-    -s, --symbols     # Набор символов для генерации:
+    -s, --symbols     # Character set for generation:
                          u - ASCII uppercase letters
                          l - ASCII lowercase letters
                          d - digits
@@ -23,43 +23,53 @@ keygen v0.0.3
                          h - HEX digits
                          o - OCT digits
                          b - BIN digits
-                         По умолчанию: uldp
-    -l, --length      # Длинна генерируемого ключа
-                         По умолчанию: 32
-    -e, --emulate     # Эмуляция работы алгоритма шифрования
-                         Поддерживаются алгоритмы:
+                         Default: uldp
+    -l, --length      # Generated key length
+                         Default: 32
+    -e, --emulate     # Emulate encryption algorithm output
+                         Supported algorithms:
                            md5, sha1, sha224, sha256, sha384, sha512, uuid
-                         По умолчанию: None
+                         Default: None
+    --unsafe          # Allow potentially problematic symbols (including ;, ", ', \\, `, $)
+                         Default: False (safe mode enabled)
 ```
 
-Использование
+Usage
 --------------------------------------
 ```bash
-# Генерация 32-символьного ключа
+# Generate a 32-character key
 > keygen
 
-# Генерация 64-символьного ключа с использованием HEX символов
+# Generate a 64-character key using HEX symbols
 > keygen -s h -l 64
 
-# Генерация 128-символьного ключа с использованием всех доступных символов
+# Generate a 128-character key using all available symbols
 > keygen -s uldp -l 128
 
-# Генерация ключа, выглядящего как UUID 
+# Generate a key that looks like UUID
 > keygen -e uuid
+
+# Generate a key with unsafe symbols
+> keygen --unsafe
 ```
 
-Список изменений
+Changelog
 --------------------------------------
+* **v0.1.0** \[_25.02.2026_\]
+
+    - Added safe mode by default and `--unsafe` flag.
+    - Removed potentially problematic symbols from the default generation.
+
 * **v0.0.3** \[_27.05.2020_\]
 
-    - Алгоритм рандома изменен на системный.
-    - Добавлена возможность генерации ключей, выглядящих как результат работы некоторых криптографических функций.
-    - Убран редим вывода дополнительной информации.
+    - Random algorithm switched to system one.
+    - Added ability to generate keys that look like crypto function outputs.
+    - Removed extra output mode.
     
 * **v0.0.2** \[_22.03.2018_\]
 
-    - Добавлена проверка входных параметров.
+    - Added input parameter validation.
     
 * **v0.0.1** \[_20.03.2018_\]
 
-    - Начало работы над проектом.
+    - Initial release.

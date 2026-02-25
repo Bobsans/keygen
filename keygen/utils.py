@@ -1,7 +1,10 @@
 import string
 
 
-def build_charset(signature: str) -> str:
+SAFE_EXCLUDE = set(";\"'\\`$")
+
+
+def build_charset(signature: str, safe: bool = True) -> str:
     charset = ''
     if 'u' in signature:
         charset += string.ascii_uppercase
@@ -17,5 +20,8 @@ def build_charset(signature: str) -> str:
         charset += string.octdigits
     if 'b' in signature:
         charset += '01'
+
+    if safe:
+        charset = ''.join([c for c in charset if c not in SAFE_EXCLUDE])
 
     return ''.join(sorted(set(charset)))
